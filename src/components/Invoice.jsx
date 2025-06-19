@@ -117,7 +117,6 @@ const Invoice = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header with Download Button */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <h1 className="text-3xl font-bold text-gray-800">Invoice Generator</h1>
           <button
@@ -129,7 +128,6 @@ const Invoice = () => {
           </button>
         </div>
 
-        {/* Invoice Content */}
         <div id="invoice-content" className="bg-white rounded-2xl shadow-2xl overflow-hidden">
           <InvoiceHeader 
             invoiceNumber={invoiceData.invoiceNumber}

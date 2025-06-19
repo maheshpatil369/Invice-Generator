@@ -11,7 +11,7 @@ import InvoiceTotals from './components/InvoiceTotals.jsx';
 import InvoiceNotes from './components/InvoiceNotes.jsx';
 
 const initialInvoiceState = {
-  invoiceNumber: 'INV-001', // Simplified initial invoice number
+  invoiceNumber: 'INV-001', 
   date: new Date().toISOString().split('T')[0],
   dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
   company: {
@@ -29,7 +29,7 @@ const initialInvoiceState = {
   },
   items: [
     {
-      id: Date.now(), // Use Date.now() for initial item to ensure uniqueness if more are added
+      id: Date.now(), 
       description: 'Example Service',
       quantity: 1,
       rate: 100.00
@@ -52,7 +52,6 @@ function App() {
     }
   }, []);
 
-  // Persist savedInvoices to local storage whenever it changes
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedInvoices));
   }, [savedInvoices]);
@@ -139,17 +138,15 @@ function App() {
   const saveCurrentInvoice = () => {
     const newSavedInvoice = {
       ...invoiceData,
-      savedId: Date.now(), // Unique ID for this saved instance
+      savedId: Date.now(), 
       savedAt: new Date().toISOString(),
     };
-    setSavedInvoices(prev => [newSavedInvoice, ...prev.slice(0, 9)]); // Keep latest 10, add to top
+    setSavedInvoices(prev => [newSavedInvoice, ...prev.slice(0, 9)]); 
   };
 
   const loadInvoice = (savedId) => {
     const invoiceToLoad = savedInvoices.find(inv => inv.savedId === savedId);
     if (invoiceToLoad) {
-      // Destructure all known properties from the loaded invoice
-      // This ensures we only set the properties defined in the original state structure
       const {
         invoiceNumber,
         date,
@@ -159,14 +156,13 @@ function App() {
         items,
         notes,
         taxRate
-        // Do not include savedId or savedAt here
-      } = JSON.parse(JSON.stringify(invoiceToLoad)); // Deep clone to be safe
+      } = JSON.parse(JSON.stringify(invoiceToLoad)); 
 
       setInvoiceData({
         invoiceNumber,
         date,
         dueDate,
-        company, // company, client, and items are already new objects/arrays due to JSON.parse(JSON.stringify())
+        company, 
         client,
         items,
         notes,
@@ -180,19 +176,16 @@ function App() {
   };
 
   const clearForm = () => {
-    // Reset to a fresh copy of the initial state
-    // Also ensure new Date objects are created for date fields
     setInvoiceData({
         ...initialInvoiceState,
         date: new Date().toISOString().split('T')[0],
         dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        items: [ // Give a fresh unique ID for the initial item on clear
+        items: [ 
           {
             ...initialInvoiceState.items[0],
             id: Date.now()
           }
         ],
-        // Reset client fields explicitly if they were part of initialInvoiceState but meant to be truly blank
         client: {
             name: '',
             address: '',
@@ -205,7 +198,6 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header with Download Button */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
           <h1 className="text-3xl font-bold text-gray-800">Invoice Generator</h1>
           <div className="flex flex-wrap gap-2">
@@ -233,7 +225,6 @@ function App() {
           </div>
         </div>
 
-        {/* Saved Invoices History */}
         {savedInvoices.length > 0 && (
           <div className="mt-8 p-6 bg-white rounded-2xl shadow-xl">
             <h2 className="text-2xl font-bold text-gray-700 mb-4 flex items-center gap-2">
@@ -271,7 +262,6 @@ function App() {
           </div>
         )}
 
-        {/* Invoice Content */}
         <div id="invoice-content" className="bg-white rounded-2xl shadow-2xl overflow-hidden mt-8">
           <InvoiceHeader 
             invoiceNumber={invoiceData.invoiceNumber}
