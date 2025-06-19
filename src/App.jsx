@@ -203,21 +203,21 @@ function App() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={saveCurrentInvoice}
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
+              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
             >
               <Save className="w-5 h-5" />
               Save Invoice
             </button>
             <button
               onClick={downloadPDF}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
             >
               <Download className="w-5 h-5" />
               Download PDF
             </button>
             <button
               onClick={clearForm}
-              className="flex items-center gap-2 bg-gray-400 hover:bg-gray-500 text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
+              className="flex items-center gap-2 bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl"
             >
               <FileX className="w-5 h-5" />
               Clear Form

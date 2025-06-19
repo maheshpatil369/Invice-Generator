@@ -12,12 +12,12 @@ const InvoiceHeader = ({ invoiceNumber, date }) => {
             <p className="text-blue-100 text-sm">Professional Services</p>
           </div>
         </div>
-        <div className="text-right">
-          <div className="flex items-center gap-2 justify-end mb-2">
+        <div className="lg:text-right text-left w-full lg:w-auto">
+          <div className="flex items-center gap-2 lg:justify-end justify-start mb-2">
             <Hash className="w-4 h-4" />
             <span className="text-sm font-medium">{invoiceNumber}</span>
           </div>
-          <div className="flex items-center gap-2 justify-end">
+          <div className="flex items-center gap-2 lg:justify-end justify-start">
             <Calendar className="w-4 h-4" />
             <span className="text-sm">{new Date(date).toLocaleDateString()}</span>
           </div>
