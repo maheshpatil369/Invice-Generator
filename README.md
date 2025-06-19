@@ -10,8 +10,6 @@ A sleek and modern web-based Invoice Generator built using **React** and **Tailw
 - 🧾 Generate printable and downloadable PDF invoices
 - 🕹️ Editable fields for complete flexibility
 
-## 🖼️ Preview
-
 
 
 ## 📦 Tech Stack
@@ -20,5 +18,4 @@ A sleek and modern web-based Invoice Generator built using **React** and **Tailw
 - **PDF Generation**: `react-to-print` or `html2pdf.js` (confirm if used)
 - **Icons**: `react-icons`
 
-## 📂 Project Structure
 
