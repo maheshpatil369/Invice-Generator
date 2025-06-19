@@ -79,6 +79,16 @@ const Invoice = () => {
     setInvoiceData(prev => ({ ...prev, notes }));
   };
 
+  const updateClientInfo = (field, value) => {
+    setInvoiceData(prev => ({
+      ...prev,
+      client: {
+        ...prev.client,
+        [field]: value
+      }
+    }));
+  };
+
   const subtotal = invoiceData.items.reduce((sum, item) => sum + (item.quantity * item.rate), 0);
   const taxAmount = subtotal * invoiceData.taxRate;
   const total = subtotal + taxAmount;
@@ -86,31 +96,44 @@ const Invoice = () => {
   const downloadPDF = async () => {
     const element = document.getElementById('invoice-content');
     const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff'
+      scale: 2, // Improves quality
+      useCORS: true, // For external images, if any
+      allowTaint: true, // May not be strictly necessary if useCORS is effective
+      backgroundColor: '#ffffff', // Ensures a white background
+      // Explicitly define the capture area based on scroll dimensions
+      width: element.scrollWidth,
+      height: element.scrollHeight,
+      // Provide window context, can help with some CSS rendering
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
     });
-    
+
     const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const imgWidth = 210;
-    const pageHeight = 295;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    let heightLeft = imgHeight;
-    
-    let position = 0;
-    
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-    
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
+    const pdf = new jsPDF('p', 'mm', 'a4'); // Portrait, mm, A4 size
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    // Calculate the image's height in the PDF, maintaining aspect ratio
+    // canvas.width and canvas.height are from the scaled canvas
+    const canvasAspectRatio = canvas.width / canvas.height;
+    const effectiveImgHeightInPdf = pdfWidth / canvasAspectRatio;
+
+    let heightLeft = effectiveImgHeightInPdf;
+    let currentPosition = 0; // This is the Y-offset for the source image
+
+    // Add the first page (or segment of the image)
+    pdf.addImage(imgData, 'PNG', 0, currentPosition, pdfWidth, effectiveImgHeightInPdf);
+    heightLeft -= pdfHeight;
+
+    // Add subsequent pages if the image is taller than one PDF page
+    while (heightLeft > 0) {
+      currentPosition -= pdfHeight; // Shift the source image "up" by one page height
       pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+      pdf.addImage(imgData, 'PNG', 0, currentPosition, pdfWidth, effectiveImgHeightInPdf);
+      heightLeft -= pdfHeight;
     }
-    
+
     pdf.save(`invoice-${invoiceData.invoiceNumber}.pdf`);
   };
 
@@ -138,9 +161,10 @@ const Invoice = () => {
             <CompanyInfo 
               company={invoiceData.company}
               client={invoiceData.client}
+              updateClientInfo={updateClientInfo}
             />
 
-            <InvoiceDetails 
+            <InvoiceDetails
               date={invoiceData.date}
               dueDate={invoiceData.dueDate}
             />

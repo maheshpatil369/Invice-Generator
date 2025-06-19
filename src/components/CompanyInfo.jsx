@@ -27,7 +27,7 @@ const CompanyInfo = ({ company, client, updateClientInfo }) => {
           <User className="w-4 h-4" />
           Bill To
         </h3>
-        <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+        <div className="bg-gray-50 rounded-lg p-4 space-y-3 min-h-[220px]"> {/* Added min-h class */}
           <input
             type="text"
             placeholder="Client Company Name"
