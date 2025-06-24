@@ -8,7 +8,7 @@ A sleek and modern web-based Invoice Generator built using **React** and **Tailw
 - 🖨️ Auto-calculate subtotal, tax, and total amount
 - 🎨 Stylish and responsive UI with Tailwind CSS
 - 🧾 Generate printable and downloadable PDF invoices
-- 🕹️ Editable fields for complete flexibility
+- 🕹️ Editable fields for complete flexibility.
 
 
 
